@@ -1,0 +1,75 @@
+/*
+ * Layout CSS
+ */
+
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#appLayout {
+    height: 100%;
+    width: 100%;
+}
+
+#headerContainer{
+    height: 5rem;
+    background: #411145;
+}
+
+#leftHeaderSection, #rightHeaderSection {
+    text-align: center;
+}
+
+#rightHeaderSection {
+    width: 15em;
+}
+
+#search {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    left: 74px;
+}
+
+
+/* Class selectors */
+.brandTitle {
+    cursor: default;
+    -webkit-margin-before: .60em;
+    -webkit-margin-after: .60em;
+    color: white;
+}
+
+.maxarSeal {
+    display: inline-block;
+    height: 52px;
+    width: 52px;
+    margin-left: 6px;
+    padding-right: 5px;
+    padding-top: 6px;
+}
+
+.appButton {
+    font-size: small;
+    font-style: italic;
+    background-color: blueviolet !important;
+    color: white !important;
+}
+
+.appMenuItem {
+    font-size: small;
+    font-style: italic;
+}
+
+.acquisitionRangeDateBox {
+    margin: 5px;
+}
+
