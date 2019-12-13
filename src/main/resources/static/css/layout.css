@@ -39,6 +39,11 @@ body {
     left: 74px;
 }
 
+#productManagerContainer {
+    padding: 5px;
+    background-color: beige;
+}
+
 
 /* Class selectors */
 .brandTitle {
