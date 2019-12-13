@@ -12,15 +12,10 @@ public class HomeController {
     @Autowired
     private AppProps appProps;
 
-//    /**
-//     * Return index.html
-//     * @return
-//     */
-//    @RequestMapping("/")
-//    public String index() {
-//        return "index";
-//    }
-
+    /**
+     * Load application home
+     * @return
+     */
     @RequestMapping("/")
     public String home() {
         return "home";

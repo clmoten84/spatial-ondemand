@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- Retrieve global logging props -->
+    <springProperty scope="context" name="consolePattern" source="global.log.console.pattern"/>
+    <springProperty scope="local" name="filePattern" source="global.log.file.pattern"/>
+    <springProperty scope="local" name="auditLog" source="global.log.file.audit"/>
+    <springProperty scope="local" name="errorLog" source="global.log.file.error"/>
+
+    <!-- Retrieve local logging props -->
+    <!--<springProperty scope="local" name="localLogPath" source="local.log.file.path"/>
+    <springProperty scope="local" name="localMaxSize" source="local.log.file.max.size"/>
+    <springProperty scope="local" name="localMaxHistory" source="local.log.file.max.history"/>
+    <springProperty scope="lcoal" name="localTotalCap" source="local.log.file.total.cap"/>-->
+
+    <!-- Retrieve integ logging props -->
+    <springProperty scope="local" name="integLogPath" source="integ.log.file.path"/>
+    <springProperty scope="local" name="integMaxSize" source="integ.log.file.max.size"/>
+    <springProperty scope="local" name="integMaxHistory" source="integ.log.file.max.history"/>
+    <springProperty scope="lcoal" name="integTotalCap" source="integ.log.file.total.cap"/>
+
+    <!-- Retrieve prod logging props -->
+    <springProperty scope="local" name="prodLogPath" source="prod.log.file.path"/>
+    <springProperty scope="local" name="prodMaxSize" source="prod.log.file.max.size"/>
+    <springProperty scope="local" name="prodMaxHistory" source="prod.log.file.max.history"/>
+    <springProperty scope="lcoal" name="prodTotalCap" source="prod.log.file.total.cap"/>
+
+    <!-- Global console appender -->
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${consolePattern}</Pattern>
+        </layout>
+
+        <!-- Logger should only log INFO and above -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <!-- LOCALHOST (default) and TEST logging config - logs are written to console only -->
+    <springProfile name="!integ !prod">
+        <!-- Application level logger -->
+        <logger name="com.maxar.spatialondemand" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+
+        <!-- Hibernate level logger -->
+        <logger name="org.hibernate" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+
+        <!-- Spring level loggers -->
+        <logger name="org.springframework.data" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+
+        <logger name="org.springframework.web" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+
+        <!-- Root level logger -->
+        <root level="ERROR">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </root>
+
+        <root level="error">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </root>
+    </springProfile>
+
+    <!-- INTEG logging config - log only to file -->
+    <springProfile name="integ">
+        <!-- Define log appenders -->
+        <!-- Audit Appender - will log stuff that is not an error (i.e. info or debug) -->
+        <appender name="FILE_AUDIT_APPENDER"
+                  class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${integLogPath}/audit/${auditLog}.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>${filePattern}</Pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${integLogPath}/audit/archived/${auditLog}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>${integMaxSize}</maxFileSize>
+                <maxHistory>${integMaxHistory}</maxHistory>
+                <totalSizeCap>${integTotalCap}</totalSizeCap>
+            </rollingPolicy>
+
+            <!-- Logger should log everything accept TRACE logs -->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>DEBUG</level>
+            </filter>
+        </appender>
+
+        <!-- Error Appender - will log errors -->
+        <appender name="FILE_ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${integLogPath}/err/${errorLog}.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>${filePattern}</Pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${integLogPath}/err/archived/${errorLog}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>${integMaxSize}</maxFileSize>
+                <maxHistory>${integMaxHistory}</maxHistory>
+                <totalSizeCap>${integTotalCap}</totalSizeCap>
+            </rollingPolicy>
+
+            <!-- Logger should only log WARN and ERROR logs -->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>WARN</level>
+            </filter>
+        </appender>
+
+        <!-- Define loggers -->
+        <!-- Application level logger -->
+        <logger name="com.maxar.spatialondemand" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE_AUDIT_APPENDER" />
+        </logger>
+
+        <!-- Hibernate level logger -->
+        <logger name="org.hibernate" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE_AUDIT_APPENDER" />
+        </logger>
+
+        <!-- Root level logger -->
+        <root level="WARN">
+            <appender-ref ref="FILE_ERROR_APPENDER" />
+        </root>
+    </springProfile>
+
+    <!-- PROD logging config - log to file only -->
+    <springProfile name="prod">
+        <!-- Define log appenders -->
+        <!-- Audit appender - will log stuff that is not an error (i.e. info, debug, etc.) -->
+        <appender name="FILE_AUDIT_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${prodLogPath}/audit/${auditLog}.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>${filePattern}</Pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${prodLogPath}/audit/archived/${auditLog}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>${prodMaxSize}</maxFileSize>
+                <maxHistory>${prodMaxHistor}</maxHistory>
+                <totalSizeCap>${prodTotalCap}</totalSizeCap>
+            </rollingPolicy>
+
+            <!-- Logger should log everything except TRACE logs -->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>DEBUG</level>
+            </filter>
+        </appender>
+
+        <!-- Error append - will log error -->
+        <appender name="FILE_ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${prodLogPath}/err/${errorLog}.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>${filePattern}</Pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${prodLogPath}/err/archived/${errorLog}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <maxFileSize>${prodMaxSize}</maxFileSize>
+                <maxHistory>${prodMaxHistor}</maxHistory>
+                <totalSizeCap>${prodTotalCap}</totalSizeCap>
+            </rollingPolicy>
+
+            <!-- Logger should only log WARN and ERROR -->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>WARN</level>
+            </filter>
+        </appender>
+
+        <!-- Define loggers -->
+        <!-- Application level logger -->
+        <logger name="com.maxar.spatialondemand" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE_AUDIT_APPENDER" />
+        </logger>
+
+        <!-- Hibernate level logger -->
+        <logger name="org.hibernate" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE_AUDIT_APPENDER" />
+        </logger>
+
+        <!-- Root level logger -->
+        <root level="WARN">
+            <appender-ref ref="FILE_ERROR_APPENDER" />
+        </root>
+    </springProfile>
+</configuration>
