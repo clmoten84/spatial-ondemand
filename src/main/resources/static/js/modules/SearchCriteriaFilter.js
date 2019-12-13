@@ -7,8 +7,9 @@
  */
 
 define(['dojo/_base/declare',
+        'dojo/dom-construct',
         'dijit/TitlePane',
-        'dijit/form/DateTextBox'], function(declare, TitlePane, DateTextBox) {
+        'dijit/form/DateTextBox'], function(declare, domConstruct, TitlePane, DateTextBox) {
 
     // SearchCriteriaFilter class declaration
     return declare(null, {
@@ -21,10 +22,13 @@ define(['dojo/_base/declare',
          */
         constructor: function(args) {
             this.searchCriteriaWidget = new TitlePane({
+                id: 'searchCriteriaFilterWidget',
                 title: 'Search Criteria'
             });
 
+            // Create the form elements for the search criteria widget and add programmatically.
             let acquisitionFromDateBox = new DateTextBox({
+                id: 'acquistionRangeBegin',
                 class: 'acquisitionRangeDateBox',
                 title: 'Acquistion Range (Begin)',
                 placeHolder: 'Acquisition Range (Begin)',
@@ -32,6 +36,7 @@ define(['dojo/_base/declare',
             });
 
             let acquisitionToDateBox = new DateTextBox({
+                id: 'acquisitionRangeEnd',
                 class: 'acquisitionRangeDateBox',
                 title: 'Acquisition Range (End)',
                 placeHolder: 'Acquisition Range (End)',

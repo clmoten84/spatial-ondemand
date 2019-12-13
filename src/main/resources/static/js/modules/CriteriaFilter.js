@@ -6,8 +6,10 @@
  */
 
 define(['dojo/_base/declare',
+        'dijit/dijit',
+        'dojo/dom',
         'dijit/Dialog',
-        'app/SearchCriteriaFilter'], function(declare, Dialog, SearchCriteriaFilter) {
+        'app/SearchCriteriaFilter'], function(declare, dijit, dom, Dialog, SearchCriteriaFilter) {
 
     // CriteriaFilter class definition
     return declare(null, {
@@ -25,7 +27,15 @@ define(['dojo/_base/declare',
             });
 
             // Add SearchCriteriaFilter widget to criteriaFilterWindow
-            this.criteriaFilterWindow.addChild(new SearchCriteriaFilter().initSearchCriteriaWidget());
+            // Only need to create a new SearchCriteriaFilter if it does not already
+            // exist in the DOM.
+            let searchCriteriaFilterWidget = dijit.byId('searchCriteriaFilterWidget');
+            if (searchCriteriaFilterWidget) {
+                this.criteriaFilterWindow.addChild(searchCriteriaFilterWidget);
+            }
+            else {
+                this.criteriaFilterWindow.addChild(new SearchCriteriaFilter().initSearchCriteriaWidget());
+            }
         },
 
         /*
