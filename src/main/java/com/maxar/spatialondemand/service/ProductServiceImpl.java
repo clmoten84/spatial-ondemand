@@ -7,6 +7,8 @@ import com.maxar.spatialondemand.repository.ProductGroupRepo;
 import com.maxar.spatialondemand.repository.ProductRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ import java.util.stream.StreamSupport;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private ModelMapper modelMapper;
 

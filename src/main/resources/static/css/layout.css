@@ -44,6 +44,14 @@ body {
     background-color: beige;
 }
 
+#mapContainer {
+    padding: 0px !important;
+}
+
+#resolutionSlider {
+    width: 300px !important;
+}
+
 
 /* Class selectors */
 .brandTitle {
@@ -76,5 +84,33 @@ body {
 
 .acquisitionRangeDateBox {
     margin: 5px;
+}
+
+.criteriaFilterSearchWidgets {
+    margin-bottom: 4px;
+}
+
+/* Dijit overrides */
+.claro .dojoxExpandoTitle {
+    font-weight: bold;
+    border: none;
+    background-color: #cde8ff;
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    padding: 5px 7px 2px 7px;
+    min-height: 17px;
+    color: #4a4a4a;
+}
+
+.claro .dojoxExpandoClosed .dojoxExpandoTitle {
+    background-image: none;
+    background-position: 0 0;
+}
+
+.claro .dojoxExpandoClosed {
+    background: none;
+    background-color: rgba(0, 0, 0, 0);
+    background-color: #E6E6E7;
+    border: none;
 }
 

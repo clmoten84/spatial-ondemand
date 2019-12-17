@@ -10,7 +10,9 @@ require(['dijit/layout/BorderContainer',
          'esri/map',
          'esri/dijit/Search',
          'app/Filter',
-         'app/AOIFilter'], function(BorderContainer, ContentPane, ExpandoPane, Map, Search, Filter, AOIFilter) {
+         'app/AOIFilter',
+         'app/widgets/MapView'], function(BorderContainer, ContentPane, ExpandoPane, Map, Search,
+                                          Filter, AOIFilter, MapView) {
 
     /******************************* Page Container ********************************/
     var appLayout = new BorderContainer({
@@ -53,19 +55,12 @@ require(['dijit/layout/BorderContainer',
     headerContainer.addChild(rightHeaderSection);
 
     /********************************* Map Container ********************************/
-    var mapContainer = new BorderContainer({
+    var mapContainer = new ContentPane({
         id: 'mapContainer',
         design: 'headline',
         region: 'center',
         gutters: false,
         liveSplitters: true
-    });
-
-    var mapView = new ContentPane({
-        id: 'mapView',
-        region: 'center',
-        style: 'height: 100%; width:100%;',
-        content: '<div id="search"></div>'
     });
 
     var productManagerContainer = new ExpandoPane({
@@ -76,21 +71,12 @@ require(['dijit/layout/BorderContainer',
         title: 'Products'
     });
 
-    mapContainer.addChild(mapView);
-    mapContainer.addChild(productManagerContainer);
+    //mapContainer.addChild(mapView);
+    appLayout.addChild(productManagerContainer);
     appLayout.addChild(mapContainer);
 
     // Initialize instance of ESRI map and Search widgets for base map
-    var map = new Map('mapView', {
-        center: [-86.7483, 34.6993],
-        zoom: 8,
-        basemap: "topo"
-    });
-
-    var search = new Search({
-        map: map
-    }, "search");
-    search.startup();
+    var map = MapView.getInstance();
 
     /*********************** START PAGE CONTAINER ********************/
     appLayout.startup();

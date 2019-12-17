@@ -1,12 +1,15 @@
 package com.maxar.spatialondemand.exceptions;
 
 import org.modelmapper.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -28,6 +31,8 @@ import java.util.stream.Collectors;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice(basePackages = "com.maxar.spatialondemand.controllers.rest")
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     /**
      * Builds a ResponseEntity instance from an ApiError instance
@@ -51,6 +56,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus httpStatus,
                                                                   WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = "Malformed JSON data in request";
         return buildResponseEntity(new APIError(HttpStatus.BAD_REQUEST, message, ex));
     }
@@ -68,6 +74,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                HttpHeaders headers,
                                                                HttpStatus httpStatus,
                                                                WebRequest req) {
+        LOG.error(ex.getLocalizedMessage());
         String message = String.format("Missing variable in path - %s", ex.getVariableName());
         return buildResponseEntity(new APIError(HttpStatus.BAD_REQUEST, message, ex));
     }
@@ -85,9 +92,30 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                  HttpHeaders headers,
                                                                  HttpStatus httpStatus,
                                                                  WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         StringBuilder builder = new StringBuilder();
         builder.append(ex.getContentType());
         builder.append(" media type is not supported for API request. Supported media types are ");
+        ex.getSupportedMediaTypes().forEach(t -> builder.append(t).append("\n"));
+        return buildResponseEntity(new APIError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, builder.toString(), ex));
+    }
+
+    /**
+     * Handles REST request made with a media type that is not acceptable
+     * @param ex
+     * @param headers
+     * @param httpStatus
+     * @param req
+     * @return
+     */
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
+                                                                      HttpHeaders headers,
+                                                                      HttpStatus httpStatus,
+                                                                      WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        StringBuilder builder = new StringBuilder();
+        builder.append("Media type is not acceptable for API request. Supported media types are ");
         ex.getSupportedMediaTypes().forEach(t -> builder.append(t).append("\n"));
         return buildResponseEntity(new APIError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, builder.toString(), ex));
     }
@@ -105,6 +133,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                          HttpHeaders headers,
                                                                          HttpStatus httpStatus,
                                                                          WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         StringBuilder builder = new StringBuilder();
         builder.append(ex.getMethod());
         builder.append(" method is not supported for API request. Supported method types are ");
@@ -125,6 +154,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                           HttpHeaders headers,
                                                                           HttpStatus status,
                                                                           WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = String.format("Required parameter %s of type %s is missing in request.",
                 ex.getParameterName(), ex.getParameterType());
 
@@ -144,6 +174,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                    HttpHeaders headers,
                                                                    HttpStatus status,
                                                                    WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = String.format("Handler not found for request %s %s", ex.getHttpMethod(), ex.getRequestURL());
         return buildResponseEntity(new APIError(HttpStatus.NOT_FOUND, message, ex));
     }
@@ -156,6 +187,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = "Invalid request arguments";
         return buildResponseEntity(new APIError(HttpStatus.BAD_REQUEST, message, ex));
     }
@@ -168,6 +200,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(ValidationException.class)
     protected ResponseEntity<Object> handleDTOMappingValidationException(ValidationException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = "DTO <-> Entity mapping failed to validate";
         APIError error = new APIError(HttpStatus.BAD_REQUEST, message, ex);
         error.setSubErrors(ex.getErrorMessages().stream()
@@ -183,6 +216,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = "Expected entity could not be found in data store";
         return buildResponseEntity(new APIError(HttpStatus.BAD_REQUEST, message, ex));
     }
@@ -195,6 +229,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleExceptionCatchAll(Exception ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
         String message = "Unexpected exception encountered";
         return buildResponseEntity(new APIError(HttpStatus.INTERNAL_SERVER_ERROR, message, ex));
     }
