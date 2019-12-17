@@ -22,8 +22,6 @@ define(['dojo/_base/declare',
                 class: 'criteriaFilterSearchWidgets',
                 title: 'Cloud Cover (%)'
             });
-
-            var mapView = MapView.getInstance();
         },
 
         /****************** Class functions *****************/
