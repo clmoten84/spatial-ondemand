@@ -90,6 +90,11 @@ body {
     margin-bottom: 4px;
 }
 
+.filterNumberSpinnerInput {
+    width: 100px;
+    margin: 5px;
+}
+
 /* Dijit overrides */
 .claro .dojoxExpandoTitle {
     font-weight: bold;
