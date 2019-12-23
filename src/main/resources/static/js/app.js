@@ -5,14 +5,17 @@
  */
 
 // Globals -- may need to refactor these to an accessor method somewhere
-var sodLayoutComponents;
-var mapView;
+var SpatialOndemand = {};
 
 require(['app/widgets/SODLayout',
-         'app/widgets/MapView'], function(SODLayout, MapView) {
+         'app/widgets/MapView',
+         'app/ProductManager'], function(SODLayout, MapView, ProductManager) {
     // Render SOD layout
-    sodLayoutComponents = SODLayout.renderLayout();
+    SODLayout.renderLayout();
 
     // Initialize and render map
-    mapView = MapView.getInstance();
+    SpatialOndemand.mapView = MapView.getInstance();
+
+    // Render products to product container
+    ProductManager.renderProducts();
 });

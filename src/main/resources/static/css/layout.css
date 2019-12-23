@@ -90,6 +90,11 @@ body {
     margin-bottom: 4px;
 }
 
+.productCategoryPanes {
+    margin-bottom: 6px;
+    font-size: small;
+}
+
 .filterNumberSpinnerInput {
     width: 100px;
     margin: 5px;
@@ -117,5 +122,10 @@ body {
     background-color: rgba(0, 0, 0, 0);
     background-color: #E6E6E7;
     border: none;
+}
+
+.dojoxExpandoContent {
+    padding: 6px;
+    overflow: scroll;
 }
 

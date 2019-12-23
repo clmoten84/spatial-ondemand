@@ -73,10 +73,10 @@ define(['dojo/dom',
         }
 
         function createProductContainer() {
-            return new ExpandoPane({
+             return new ExpandoPane({
                 id: 'productManagerContainer',
                 region: 'left',
-                style: 'height: 100%; width:18%;',
+                style: 'height: 100%; width:25%;',
                 splitter: true,
                 title: 'Products'
             });
@@ -86,8 +86,7 @@ define(['dojo/dom',
             // Renders the SOD page layout by instantiating the individual sections and components
             // of the layout and 'starting' the page root component.
             renderLayout: function() {
-                // If page components have not been initialized, initialize them, otherwise
-                // return the reference.
+                // If page components have not been initialized, initialize and render them
                 if (!pageComponents) {
                     // Initialize page components
                     let pageRoot = createPageRoot();
@@ -99,16 +98,7 @@ define(['dojo/dom',
                     pageRoot.addChild(mapContainer);
                     pageRoot.addChild(productContainer);
                     pageRoot.startup();
-
-                    pageComponents =  {
-                        pageRoot: pageRoot,
-                        pageHeader: pageHeader,
-                        mapContainer: mapContainer,
-                        productContainer: productContainer
-                    };
                 }
-
-                return pageComponents;
             }
         }
 });

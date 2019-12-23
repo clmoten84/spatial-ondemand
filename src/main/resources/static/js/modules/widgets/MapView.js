@@ -14,6 +14,7 @@ define(['dojo/_base/declare',
         // MapView object contains all properties and methods related to the map.
         var mapView;
 
+        // Singleton constructor
         function createMapInstance() {
             // The map should live in the border container 'mapView' which is placed in the
             // 'center' of the app layout.
