@@ -6,10 +6,11 @@
  * multiple instantiations.
  */
 
-define(['dojo/dom',
+define(['dojo/on',
+        'dojo/dom',
         'dojo/request',
         'dijit/dijit',
-        'dijit/TitlePane'], function(dom, request, dijit, TitlePane) {
+        'dijit/TitlePane'], function(on, dom, request, dijit, TitlePane) {
 
     return {
         renderProducts: function() {
@@ -27,14 +28,23 @@ define(['dojo/dom',
                     var productGroups = response;
                     var productManagerContainer = dijit.byId('productManagerContainer');
                     productGroups.forEach(function(currVal, idx, arr) {
+                        // Create product category title pane component
                         var productCat = new TitlePane({
                             id: currVal.groupName + '_productcat',
                             class: 'productCategoryPanes',
                             title: currVal.groupName,
-                            open: 0
+                            open: 0,
+                            toggleable: true
                         });
 
+                        // Add product category title pane component to product manager container
                         productManagerContainer.addChild(productCat);
+
+                        // Handle click of title pane node (i.e. expand and collapse of title pane)
+                        var evtTarget = dom.byId(currVal.groupName + '_productcat_titleBarNode');
+                        on(evtTarget, 'click', function(arg) {
+                            console.log(productCat.open);
+                        });
                     });
                 },
 
