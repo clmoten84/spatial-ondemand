@@ -1,6 +1,9 @@
 package com.maxar.spatialondemand.dto;
 
+import com.maxar.spatialondemand.model.Product;
 import lombok.*;
+
+import java.util.List;
 
 /**
  * ProductGroupDTO
@@ -16,4 +19,5 @@ import lombok.*;
 public class ProductGroupDTO {
     private Integer groupId;
     private String groupName;
+    private List<Product> products;
 }

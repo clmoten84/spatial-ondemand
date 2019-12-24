@@ -1,5 +1,6 @@
 package com.maxar.spatialondemand.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,7 +19,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
 @DynamicUpdate
 @DynamicInsert
 public class Product {
@@ -33,6 +33,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
+    @JsonBackReference
     private ProductGroup productGroup;
 
     @Column(name = "product_name", nullable = false, unique = true)
@@ -40,4 +41,16 @@ public class Product {
 
     @Column(name = "service_url", nullable = false)
     private String serviceUrl;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        return productId != null && productId.equals(((Product) o).getProductId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 }

@@ -43,6 +43,9 @@ define(['dojo/on',
                         // Handle click of title pane node (i.e. expand and collapse of title pane)
                         var evtTarget = dom.byId(currVal.groupName + '_productcat_titleBarNode');
                         on(evtTarget, 'click', function(arg) {
+                            if (productCat.open) {
+                                // Load associated products from server
+                            }
                             console.log(productCat.open);
                         });
                     });

@@ -1,10 +1,13 @@
 package com.maxar.spatialondemand.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ProductGroup
@@ -33,4 +36,24 @@ public class ProductGroup {
 
     @Column(name = "group_name", nullable = false, unique = true)
     private String groupName;
+
+    @OneToMany(
+            mappedBy = "productGroup",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Setter(AccessLevel.PRIVATE)
+    @JsonManagedReference
+    private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.setProductGroup(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.setProductGroup(null);
+    }
 }
