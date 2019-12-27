@@ -52,11 +52,17 @@ body {
     width: 300px !important;
 }
 
+#filterMenu {
+    margin-top: 5px !important;
+}
+
+#aoiMenu {
+    margin-top: 5px !important;
+}
+
 /* Class selectors */
 .brandTitle {
     cursor: default;
-    -webkit-margin-before: .60em;
-    -webkit-margin-after: .60em;
     color: white;
 }
 
@@ -69,11 +75,13 @@ body {
     padding-top: 6px;
 }
 
+.rightHeaderButton {
+    margin-top: 8% !important;
+    font-size: 14px;
+}
+
 .appButton {
     font-size: small;
-    font-style: italic;
-    background-color: blueviolet !important;
-    color: white !important;
 }
 
 .appMenuItem {

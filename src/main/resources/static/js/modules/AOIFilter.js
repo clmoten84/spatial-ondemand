@@ -9,7 +9,10 @@ define(['dijit/form/DropDownButton',
         'dijit/DropDownMenu',
         'dijit/MenuItem'], function(DropDownButton, DropDownMenu, MenuItem) {
 
-    let aoiFilterMenu = new DropDownMenu();
+    let aoiFilterMenu = new DropDownMenu({
+        id: 'aoiMenu'
+    });
+
     let drawAOIMenuItem = new MenuItem({
         label: 'Draw AOI',
         class: 'appMenuItem',
@@ -44,7 +47,7 @@ define(['dijit/form/DropDownButton',
     let aoiFilterBtn = new DropDownButton({
         name: 'aoiFiltersBtn',
         id: 'aoiFiltersBtn',
-        class: 'appButton',
+        class: 'rightHeaderButton',
         label: 'Define AOI',
         showLabel: true,
         iconClass: 'dijitIconEdit',

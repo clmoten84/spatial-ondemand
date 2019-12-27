@@ -12,7 +12,10 @@ define(['dojo/request',
         'app/CriteriaFilter'], function(request, DropDownButton, DropDownMenu, MenuItem, CriteriaFilter){
 
     // Define drop down menu and menu items
-    let filterMenu = new DropDownMenu();
+    let filterMenu = new DropDownMenu({
+        id: 'filterMenu'
+    });
+
     let productFilterMenuItem = new MenuItem({
         label: 'Product Filter',
         class: 'appMenuItem',
@@ -56,7 +59,7 @@ define(['dojo/request',
     let filterBtn = new DropDownButton({
         name: 'filtersBtn',
         id: 'filtersBtn',
-        class: 'appButton',
+        class: 'rightHeaderButton',
         label: 'Filters',
         showLabel: true,
         iconClass: 'dijitIconFilter',
