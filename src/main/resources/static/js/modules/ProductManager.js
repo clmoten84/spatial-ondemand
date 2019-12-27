@@ -10,7 +10,8 @@ define(['dojo/on',
         'dojo/dom',
         'dojo/request',
         'dijit/dijit',
-        'dijit/TitlePane'], function(on, dom, request, dijit, TitlePane) {
+        'dijit/TitlePane',
+        'dijit/form/CheckBox'], function(on, dom, request, dijit, TitlePane, CheckBox) {
 
     return {
         renderProducts: function() {
@@ -32,22 +33,24 @@ define(['dojo/on',
                         var productCat = new TitlePane({
                             id: currVal.groupName + '_productcat',
                             class: 'productCategoryPanes',
-                            title: currVal.groupName,
+                            title: currVal.groupName + ' (' + currVal.products.length + ')',
                             open: 0,
                             toggleable: true
                         });
+
+                        // Add product checkboxes to category title pane
+
 
                         // Add product category title pane component to product manager container
                         productManagerContainer.addChild(productCat);
 
                         // Handle click of title pane node (i.e. expand and collapse of title pane)
-                        var evtTarget = dom.byId(currVal.groupName + '_productcat_titleBarNode');
+                        /*var evtTarget = dom.byId(currVal.groupName + '_productcat_titleBarNode');
                         on(evtTarget, 'click', function(arg) {
                             if (productCat.open) {
                                 // Load associated products from server
                             }
-                            console.log(productCat.open);
-                        });
+                        });*/
                     });
                 },
 
