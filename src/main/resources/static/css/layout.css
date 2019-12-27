@@ -34,7 +34,7 @@ body {
 #search {
     display: block;
     position: absolute;
-    z-index: 2;
+    z-index: 100;
     top: 20px;
     left: 74px;
 }

@@ -21,7 +21,8 @@ define(['dojo/_base/declare',
             var map = new Map("mapContainer", {
                 center: [-86.7483, 34.6993],
                 zoom: 8,
-                basemap: "topo"
+                basemap: "satellite",
+                smartNavigation: true  // Set this to false for legacy map panning
             });
 
             // Add a div element to the 'mapView' dom node for the search widget to live
