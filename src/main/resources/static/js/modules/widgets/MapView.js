@@ -26,7 +26,8 @@ define(['dojo/_base/declare',
             });
 
             // Add a div element to the 'mapView' dom node for the search widget to live
-            domConstruct.create("div", {id: 'search'}, "mapContainer_container", "last");
+            //domConstruct.create("div", {id: 'search'}, "mapContainer_container", "last");
+            domConstruct.create("div", {id: 'search'}, "mapContainer", "last");
 
             // Now create search widget and place in search div
             var search = new Search({
