@@ -76,7 +76,7 @@ define(['dojo/dom',
              return new ExpandoPane({
                 id: 'productManagerContainer',
                 region: 'left',
-                style: 'height: 100%; width:275px;',
+                style: 'height: 100%; width:320px;',
                 splitter: true,
                 title: 'Products'
             });

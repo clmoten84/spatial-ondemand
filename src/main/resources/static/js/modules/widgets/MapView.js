@@ -19,8 +19,8 @@ define(['dojo/_base/declare',
             // The map should live in the border container 'mapView' which is placed in the
             // 'center' of the app layout.
             var map = new Map("mapContainer", {
-                center: [-86.7483, 34.6993],
-                zoom: 8,
+                center: [-82.4572, 27.9506],
+                zoom: 10,
                 basemap: "satellite",
                 smartNavigation: true  // Set this to false for legacy map panning
             });
