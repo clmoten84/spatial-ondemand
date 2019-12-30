@@ -52,7 +52,7 @@ define(['dojo/on',
                         // Add product checkboxes to category title pane using algorithm below
                         // First create a div to hold the checkbox/label combo. Then add the div to the product category title pane DOM node.
                         // Then create the checkbox and label elements and append their DOM nodes to the checkbox/label div.
-                        // This seems convoluted....but Dojo sucks so...
+                        // This seems convoluted....but Dojo...
                         // ALL option
                         let productCatDOM = dom.byId(normalizeProductValues(currGroup.groupName) + '_productcat_pane');
                         let allInputWidget = domConstruct.create('div', {id: normalizeProductValues(currGroup.groupName) + '_inputWidget', class: 'productOption'});
@@ -64,8 +64,23 @@ define(['dojo/on',
                             intermediateChanges: true,
                             title: 'Toggle all products for group ' + currGroup.groupName,
                             checked: false,
+                            productGroup: currGroup,
                             onChange: function (newVal) {
-                                console.log('Toggled ALL products to ' + newVal);
+                                let selectedGroupName = this.productGroup.groupName;
+                                this.productGroup.products.forEach(function (product) {
+                                    let productCheckbox = dijit.byId(
+                                        normalizeProductValues(selectedGroupName) + '_' +
+                                        normalizeProductValues(product.productName));
+
+                                    if (newVal) {
+                                        if (!productCheckbox.get('checked'))
+                                            productCheckbox.set('checked', true);
+                                    }
+                                    else {
+                                        if (productCheckbox.get('checked'))
+                                            productCheckbox.set('checked', false);
+                                    }
+                                });
                             }
                         });
                         allInputWidget.appendChild(allOption.domNode);
@@ -86,8 +101,15 @@ define(['dojo/on',
                                 intermediateChanges: true,
                                 title: 'Toggle product ' + currProduct.productName,
                                 checked: false,
+                                productGroup: currGroup.groupName,
+                                product: currProduct,
                                 onChange: function (newVal) {
-                                    console.log('Toggled product ' + currProduct.productName + ' to ' + newVal);
+                                    if (newVal) {
+                                        console.log('Load product ' + this.product.productName + ' into map for export.');
+                                    }
+                                    else {
+                                        console.log('Remove product ' + this.product.productName + ' from map.');
+                                    }
                                 }
                             });
                             productInputWidget.appendChild(productOption.domNode);
@@ -96,26 +118,6 @@ define(['dojo/on',
                             let productLbl = domConstruct.create('label', {innerHTML: currProduct.productName, class: 'productLabel'});
                             productInputWidget.appendChild(productLbl);
                         });
-
-                        // Individual product options
-                        // currGroup.products.forEach(function (currProduct) {
-                        //     let prodOption = new CheckBox({
-                        //         id: normalizeProductValues(currGroup.groupName) + '_' + normalizeProductValues(currProduct.productName),
-                        //         intermediateChanges: true,
-                        //         title: 'Toggle product ' + currProduct.productName,
-                        //         checked: false,
-                        //         class: 'productOoption',
-                        //         onChange: function (newVal) {
-                        //             console.log('Toggled product ' + currProduct.productName + ' to ' + newVal);
-                        //         }
-                        //     });
-                        //     domConstruct.create("label", {for: normalizeProductValues(currGroup.groupName) + "_" +
-                        //             normalizeProductValues(currProduct.productName), innerHTML: currProduct.productName});
-                        //     productCat.addChild(prodOption);
-                        // });
-
-                        // Add product category title pane component to product manager container
-                        //productManagerContainer.addChild(productCat);
                     });
                 },
 
