@@ -13,32 +13,8 @@ define(['dojo/request',
 
     // Define drop down menu and menu items
     let filterMenu = new DropDownMenu({
-        id: 'filterMenu'
-    });
-
-    let productFilterMenuItem = new MenuItem({
-        label: 'Product Filter',
-        class: 'appMenuItem',
-        tooltip: 'Filter the export by enabling/disabling service products...',
-        onClick: function() {
-            request.get('api/products', {
-                handleAs: 'json',
-                timeout: 60000,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(
-                function(text) {
-                    // Success
-                    console.log(text);
-                },
-
-                function(err) {
-                    // Fail
-                    console.error(err);
-                }
-            );
-        }
+        id: 'filterMenu',
+        class: 'appMenu'
     });
 
     let criteriaFilterMenuItem = new MenuItem({
@@ -52,7 +28,6 @@ define(['dojo/request',
         }
     });
 
-    filterMenu.addChild(productFilterMenuItem);
     filterMenu.addChild(criteriaFilterMenuItem);
 
     // Define button for triggering drop down menu

@@ -7,19 +7,16 @@
 
 define(['dijit/form/DropDownButton',
         'dijit/DropDownMenu',
-        'dijit/MenuItem'], function(DropDownButton, DropDownMenu, MenuItem) {
+        'dijit/Menu',
+        'dijit/MenuItem',
+        'dijit/PopupMenuItem',
+        'dijit/TooltipDialog',
+        'app/widgets/aoi/AOIDraw'], function(DropDownButton, DropDownMenu, Menu, MenuItem, PopupMenuItem,
+                                             TooltipDialog, AOIDraw) {
 
     let aoiFilterMenu = new DropDownMenu({
-        id: 'aoiMenu'
-    });
-
-    let drawAOIMenuItem = new MenuItem({
-        label: 'Draw AOI',
-        class: 'appMenuItem',
-        tooltip: 'Draw an area of interest for export...',
-        onClick: function () {
-            console.log('Initialize the drawing toolbar...');
-        }
+        id: 'aoiMenu',
+        class: 'appMenu'
     });
 
     let modifyAOIMenuItem = new MenuItem({
@@ -40,9 +37,19 @@ define(['dijit/form/DropDownButton',
         }
     });
 
-    aoiFilterMenu.addChild(drawAOIMenuItem);
+    let aoiManagerMenuItem = new MenuItem({
+        label: 'AOI Manager',
+        class: 'appMenuItem',
+        tooltip: 'View your defined AOIs',
+        onClick: function () {
+            console.log('Display AOI manager widget...');
+        }
+    });
+
+    aoiFilterMenu.addChild(new AOIDraw().renderDrawWidgets());
     aoiFilterMenu.addChild(modifyAOIMenuItem);
     aoiFilterMenu.addChild(uploadAOIMenuItem);
+    aoiFilterMenu.addChild(aoiManagerMenuItem);
 
     let aoiFilterBtn = new DropDownButton({
         name: 'aoiFiltersBtn',

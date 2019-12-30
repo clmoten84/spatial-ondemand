@@ -18,7 +18,7 @@ body {
     width: 100%;
 }
 
-#headerContainer{
+#headerContainer {
     height: 5rem;
     background: #411145;
 }
@@ -52,14 +52,6 @@ body {
     width: 300px !important;
 }
 
-#filterMenu {
-    margin-top: 5px !important;
-}
-
-#aoiMenu {
-    margin-top: 5px !important;
-}
-
 /* Class selectors */
 .brandTitle {
     cursor: default;
@@ -84,9 +76,22 @@ body {
     font-size: small;
 }
 
+.appMenu {
+    margin-top: 5px !important;
+}
+
+.appSubMenu {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+
 .appMenuItem {
     font-size: small;
     font-style: italic;
+}
+
+.drawDialog {
+    padding: 5px;
 }
 
 .acquisitionRangeDateBox {
