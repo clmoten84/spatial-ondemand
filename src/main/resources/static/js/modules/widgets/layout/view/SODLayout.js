@@ -11,16 +11,17 @@ define(['dojo/dom',
         'dijit/layout/BorderContainer',
         'dijit/layout/ContentPane',
         'dojox/layout/ExpandoPane',
-        'app/Filter',
-        'app/AOIFilter'], function(dom, domConstruct, BorderContainer,
-                                   ContentPane, ExpandoPane, Filter, AOIFilter) {
-
-        // pageComponents object contains references to all page layout components
-        var pageComponents;
+        'app/widgets/layout/view/MapView',
+        'app/widgets/filter/view/FilterMenu',
+        'app/widgets/aoi/view/AOIMenu',
+        'app/widgets/cart/view/ShoppingCart',
+        'app/widgets/product/view/ProductManager'], function(dom, domConstruct, BorderContainer,
+                                                         ContentPane, ExpandoPane, MapView, FilterMenu,
+                                                         AOIMenu, ShoppingCart, ProductManager) {
 
         // Creates the page layout root component which serves as the parent component
         // for all other layout components.
-        function createPageRoot() {
+        function renderPageRoot() {
             return new BorderContainer({
                 design: 'headline',
                 gutters: false
@@ -28,7 +29,7 @@ define(['dojo/dom',
         }
 
         // Creates the page header and associated components.
-        function createPageHeader() {
+        function renderPageHeader() {
             let headerContainer = new BorderContainer({
                 id: 'headerContainer',
                 region: 'top',
@@ -51,54 +52,36 @@ define(['dojo/dom',
             });
             headerContainer.addChild(centerHeaderSection);
 
-            // Filters
+            // App actions
             let rightHeaderSection = new ContentPane({
                 id: 'rightHeaderSection',
                 region: 'right'
             });
-            rightHeaderSection.addChild(Filter.initFiltersBtn());
-            rightHeaderSection.addChild(AOIFilter.initAOIFilter());
+
+            let logoutLink = domConstruct.create('a', {innerHTML: 'Sign Out', href: '#',  style: 'color:white; ' +
+                'float:right; font-size:13px; margin-right:0.2em;'});
+            rightHeaderSection.domNode.appendChild(logoutLink);
+
+            let actionsDiv = domConstruct.create('div', {style: 'clear:both; float:right; margin-top:5%;'});
+            actionsDiv.appendChild(FilterMenu.renderFiltersMenu().domNode);
+            actionsDiv.appendChild(AOIMenu.renderAOIMenu().domNode);
+            actionsDiv.appendChild(ShoppingCart.renderShoppingCartBtn().domNode);
+            rightHeaderSection.domNode.appendChild(actionsDiv);
+
             headerContainer.addChild(rightHeaderSection);
             return headerContainer;
-        }
-
-        function createMapContainer() {
-            return new ContentPane({
-                id: 'mapContainer',
-                design: 'headline',
-                region: 'center',
-                gutters: false,
-                liveSplitters: true
-            });
-        }
-
-        function createProductContainer() {
-             return new ExpandoPane({
-                id: 'productManagerContainer',
-                region: 'left',
-                style: 'height: 100%; width:320px;',
-                splitter: true,
-                title: 'Products'
-            });
         }
 
         return {
             // Renders the SOD page layout by instantiating the individual sections and components
             // of the layout and 'starting' the page root component.
-            renderLayout: function() {
+            renderAppLayout: function() {
                 // If page components have not been initialized, initialize and render them
-                if (!pageComponents) {
-                    // Initialize page components
-                    let pageRoot = createPageRoot();
-                    let pageHeader = createPageHeader();
-                    let mapContainer = createMapContainer();
-                    let productContainer = createProductContainer();
-
-                    pageRoot.addChild(pageHeader);
-                    pageRoot.addChild(mapContainer);
-                    pageRoot.addChild(productContainer);
-                    pageRoot.startup();
-                }
+                let pageRoot = renderPageRoot();
+                pageRoot.addChild(renderPageHeader());
+                pageRoot.addChild(MapView.renderMapContainer());
+                pageRoot.addChild(ProductManager.renderProductContainer());
+                pageRoot.startup();
             }
         }
 });

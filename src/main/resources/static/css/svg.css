@@ -1,0 +1,10 @@
+.mapFaceActions {
+    fill: white;
+    opacity: 0.75;
+}
+
+.mapFaceActions:hover {
+    fill: beige;
+    cursor: pointer;
+    opacity: 0.92;
+}

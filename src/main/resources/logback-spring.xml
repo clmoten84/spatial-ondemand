@@ -9,6 +9,7 @@
     <springProperty scope="local" name="errorLog" source="global.log.file.error"/>
 
     <!-- Retrieve local logging props -->
+    <!-- Commenting this out because when run locally logging to the console suffices -->
     <!--<springProperty scope="local" name="localLogPath" source="local.log.file.path"/>
     <springProperty scope="local" name="localMaxSize" source="local.log.file.max.size"/>
     <springProperty scope="local" name="localMaxHistory" source="local.log.file.max.history"/>

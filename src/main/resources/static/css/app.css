@@ -1,32 +1,345 @@
-/* Main application styles */
+/*
+ * Layout CSS
+ */
 
-html, body, #viewDiv, #appContainer {
+html, body {
+    height: 100%;
+    width: 100%;
     padding: 0;
     margin: 0;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#appLayout {
     height: 100%;
     width: 100%;
 }
 
-#appNavBar {
-    border-radius: 0px;
-    background-color: currentColor;
-    text: white;
+#headerContainer {
+    height: 5rem;
+    background: #411145;
 }
 
-.navbar {
-    margin-bottom: 0;
+#leftHeaderSection {
+    text-align: center;
 }
 
-/* Search widget */
-.arcgisSearch {
+#rightHeaderSection {
+    width: 16em;
+    /*text-align: center;*/
+}
+
+#search {
     display: block;
-    top: 1.25em;
-    left: 6em;
-    right: 0.625em;
     position: absolute;
-    height: 3.75em;
-    width: auto;
-    font-size: 1em;
-    line-height: 1.25em;
-    z-index: 3;
+    z-index: 100;
+    top: 20px;
+    left: 74px;
 }
+
+#projectsDiv {
+    display: block;
+    position: absolute;
+    z-index: 100;
+    top: 98px;
+    left: 13px;
+    width: 48px;
+    height: 48px;
+}
+
+#searchResultsDiv {
+    display: block;
+    position: absolute;
+    z-index: 100;
+    top: 156px;
+    left: 13px;
+    width: 48px;
+    height: 48px;
+}
+
+#productManagerContainer {
+    padding: 5px;
+    background-color: beige;
+}
+
+#mapContainer {
+    padding: 0px !important;
+}
+
+#resolutionSlider {
+    width: 300px !important;
+}
+
+#aoiCoordinatesWidget {
+    width: 700px !important;
+}
+
+/*
+ * This selector is required to properly set the height for this dialog for some reason.
+ * Without it, the dialog for the AOI coordinates widget does not display correctly.
+ */
+#aoiCoordinatesWidget .dijitDialogPaneContent {
+    height: 450px;
+}
+
+#aoiCoordinatesTypeSelectorWrapper {
+    height: 430px !important;
+}
+
+#aoiManager {
+    position: absolute;
+    top: 85px !important;
+    right: 5px !important;
+    left: unset !important;
+    float: right !important;
+    width: 365px;
+    font-size: small !important;
+}
+
+#aoiManager .dijitDialogTitleBar {
+    display: none !important;
+}
+
+#aoiManager .dijitDialogPaneContent {
+    background-color:beige !important;
+}
+
+#aoiManagerSelect_menu {
+    font-size: small !important;
+}
+
+/* Active Edit AOI button styling */
+#editAOIBtn .activeAppBtn .dijitToggleButton {
+    background-color: red !important;
+    background-image: none !important;
+    border: 1px solid #411145 !important;
+    border-radius: 2px !important;
+    color: #333333 !important;
+    font-size: small !important;
+}
+
+/* Class selectors */
+.brandTitle {
+    cursor: default;
+    color: white;
+}
+
+.maxarSeal {
+    display: inline-block;
+    height: 52px;
+    width: 52px;
+    margin-left: 6px;
+    padding-right: 5px;
+    padding-top: 6px;
+}
+
+.rightHeaderButton {
+    font-size: 13px;
+}
+
+.appButton {
+    font-size: small;
+}
+
+.appMenu {
+    margin-top: 5px !important;
+}
+
+.appSubMenu {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+
+.appMenuItem {
+    font-size: small;
+    font-style: italic;
+}
+
+.drawDialog {
+    font-size: small;
+    padding: 5px;
+    width: 215px;
+}
+
+.drawDialog .dijitTooltipConnector {
+    display: none;
+}
+
+.aoiSizeSelector {
+    font-size: small;
+    text-align: center;
+}
+
+.aoiSizeInput {
+    padding: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 185px;
+}
+
+.aoiCoordinatesFormContainer {
+    padding: 5px;
+}
+
+.aoiCoordinatesLabel {
+    margin-right:4px;
+    vertical-align:middle;
+}
+
+.latLongInput {
+    margin-right:4px;
+    width: 60px;
+}
+
+.dimensionsLabel {
+    vertical-align: middle;
+}
+
+.dimensionsInput {
+    width: 125px;
+}
+
+.acquisitionRangeDateBox {
+    margin: 5px;
+}
+
+.criteriaFilterSearchWidgets {
+    margin-bottom: 4px;
+}
+
+.productCategoryPanes {
+    margin-bottom: 6px;
+    font-size: small;
+    padding: 2px;
+}
+
+.productOption {
+    margin-bottom: 2px;
+}
+
+.productLabel {
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.filterNumberSpinnerInput {
+    width: 100px;
+    margin: 5px;
+}
+
+/* Custom icon declarations */
+.shopping-cart-img {
+    background-image: url("../img/cart_shopping_16.png");
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}
+
+.no-svg .projects-lt {
+    width: 48px;
+    height: 48px;
+    background-image: url('../img/projectslt_48.png')
+}
+
+.no-svg .search-lt {
+    width: 48px;
+    height: 48px;
+    background-image: url('../img/searchlt_48.png');
+}
+
+/* Dijit/Dojox overrides */
+.claro .dojoxExpandoTitle {
+    font-weight: bold;
+    border: none;
+    background-color: #cde8ff;
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    padding: 5px 7px 2px 7px;
+    min-height: 17px;
+    color: #4a4a4a;
+}
+
+.claro .dojoxExpandoClosed .dojoxExpandoTitle {
+    background-image: none;
+    background-position: 0 0;
+}
+
+.claro .dojoxExpandoClosed {
+    background: none;
+    background-color: rgba(0, 0, 0, 0);
+    background-color: #E6E6E7;
+    border: none;
+}
+
+.claro .dijitDialog {
+    border: 1px solid #411145 !important;
+}
+
+.dojoxExpandoContent {
+    padding: 6px;
+    overflow: scroll;
+}
+
+/* Selectors for styling application buttons */
+.secondaryAppBtn .dijitButtonNode {
+    background-color: white !important;
+    background-image: none !important;
+    border: 1px solid #411145 !important;
+    border-radius: 2px !important;
+    color: #333333 !important;
+    font-size: small !important;
+}
+
+.primaryAppBtn .dijitButtonNode {
+    background-color: #411145 !important;
+    background-image: none !important;
+    border: 1px solid #411145 !important;
+    border-radius: 2px !important;
+    color: white !important;
+    font-size: small !important;
+}
+
+.disabledAppBtn .dijitButtonNode {
+    background-color: #efefef !important;
+    background-image: none !important;
+    border: 1px solid #efefef !important;
+    border-radius: 2px !important;
+    color: #808080 !important;
+    font-size: small !important;
+    cursor: default !important;
+}
+
+/* Selectors for styling application modal dialogs */
+.appModalDialog .dijitDialogTitle {
+    color: white !important;
+}
+
+.appModalDialog .dijitDialogTitleBar {
+    border: none !important;
+    background-color: #411145 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    cursor: move !important;
+}
+
+/* Selectors for styling application non-modal dialogs */
+.appNonModalDialog .dijitDialogTitle {
+    color: white !important;
+}
+
+.appNonModalDialog .dijitDialogTitleBar {
+    border: none !important;
+    background-color: #411145 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    cursor: move !important;
+}
+
+.appNonModalDialog_underlay {
+    display: none;
+}
+

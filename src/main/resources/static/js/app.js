@@ -7,15 +7,17 @@
 // Globals -- may need to refactor these to an accessor method somewhere
 var SpatialOndemand = {};
 
-require(['app/widgets/SODLayout',
-         'app/widgets/MapView',
-         'app/ProductManager'], function(SODLayout, MapView, ProductManager) {
+require(['app/widgets/layout/view/SODLayout',
+         'app/widgets/layout/view/MapView',
+         'app/widgets/product/viewController/ProductManagerViewController'],
+                function(SODLayout, MapView, ProductManagerViewController) {
+
     // Render SOD layout
-    SODLayout.renderLayout();
+    SODLayout.renderAppLayout();
 
     // Initialize and render map
     SpatialOndemand.mapView = MapView.getInstance();
 
-    // Render products to product container
-    ProductManager.renderProducts();
+    // Display products data in product container
+    ProductManagerViewController.renderProducts();
 });

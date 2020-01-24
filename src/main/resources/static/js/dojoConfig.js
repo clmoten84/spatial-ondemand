@@ -9,6 +9,10 @@ var dojoConfig = {
         {
             name: 'app',
             location: location.pathname.replace(/\/[^/]+$/, '') + 'js/modules'
+        },
+        {
+            name: 'amd_lib',
+            location: location.pathname.replace(/\/[^/]+$/, '') + 'js/amd_lib'
         }
     ]
 };
