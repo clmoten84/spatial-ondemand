@@ -1,0 +1,126 @@
+/*
+ * admin.css
+ * Styles for admin page
+ */
+
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: beige;
+}
+
+/* ID Selectors */
+#admin-layout {
+    height: 100%;
+    width: 100%;
+}
+
+#header-container {
+    height: 5rem;
+    background: #411145;
+}
+
+#branding-container, #branding {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#brand-title {
+    display: inline-block;
+    color: white;
+    cursor: default;
+}
+
+#body-container {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* Class Selectors */
+.maxar-seal {
+    display: inline-block;
+    height: 52px;
+    width: 52px;
+    margin-left: 12px;
+    margin-right: 15px;
+}
+
+.admin-panel {
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+    background-color: #411145;
+    font-size: small;
+    margin-bottom: 12px;
+}
+
+.admin-manager-label {
+    padding-bottom: 5px;
+    font-size: 20px;
+    color: white;
+    border-bottom: 1px solid white;
+    margin-bottom: 12px;
+}
+
+.admin-manager-actions {
+    margin-bottom: 12px;
+}
+
+.manager-action {
+    display: inline-block;
+    font-size: small;
+    margin-right: 10px;
+}
+
+.admin-form-field {
+    margin-bottom: 12px;
+}
+
+.admin-form-field-label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.admin-form-field-textbox {
+    display: block;
+    border-radius: 4px;
+    padding: 4px;
+    width: 350px;
+}
+
+.admin-form-actions {
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+}
+
+.dijitDialog {
+    font-size: small;
+}
+
+.dijitDialogPaneContent {
+    background-color: beige !important;
+}
+
+.gridx {
+    height: 300px;
+}
+
+.dojoxMultiSelectItemBox {
+    margin-right: 4px !important;
+}
+
+.dojoxCheckedMultiSelectWrapper {
+    border-radius: 4px;
+    padding: 4px;
+    width: 350px;
+}

@@ -2,6 +2,9 @@ package com.maxar.spatialondemand.dto;
 
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * ProductDTO
  *
@@ -18,4 +21,7 @@ public class ProductDTO {
     private String productGroupName;
     private String productName;
     private String serviceUrl;
+
+    @ToString.Exclude
+    private Set<ProjectDTO> projects = new HashSet<>();
 }

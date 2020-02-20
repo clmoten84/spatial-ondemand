@@ -6,7 +6,9 @@
 
 define(['dojo/dom-construct',
         'dijit/TitlePane',
-        'dijit/form/NumberSpinner'], function(domConstruct, TitlePane, NumberSpinner) {
+        'dijit/form/NumberSpinner',
+        'app/widgets/filter/viewController/CriteriaFilterViewController'],
+            function(domConstruct, TitlePane, NumberSpinner, CriteriaFilterViewController) {
 
     return {
         /**
@@ -31,9 +33,7 @@ define(['dojo/dom-construct',
                 constraints: { min: 0, max: 99, places: 0 },
                 required: false,
                 trim: true,
-                onChange: function() {
-
-                }
+                onChange: CriteriaFilterViewController.validateCloudCoverFromVal
             }).domNode);
 
             cloudCoverFilterDiv.appendChild(domConstruct.create('span', {innerHTML: '-'}));
@@ -47,9 +47,7 @@ define(['dojo/dom-construct',
                 constraints: { min: 1, max: 100, places: 0 },
                 required: true,
                 trim: true,
-                onChange: function (newValue) {
-
-                }
+                onChange: CriteriaFilterViewController.validateCloudCoverToVal
             }).domNode);
 
             cloudCoverFilter.set('content', cloudCoverFilterDiv);

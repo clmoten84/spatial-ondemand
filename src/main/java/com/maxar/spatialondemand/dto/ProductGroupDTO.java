@@ -3,6 +3,7 @@ package com.maxar.spatialondemand.dto;
 import com.maxar.spatialondemand.model.Product;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,5 +20,7 @@ import java.util.List;
 public class ProductGroupDTO {
     private Integer groupId;
     private String groupName;
-    private List<Product> products;
+
+    @ToString.Exclude
+    private List<ProductDTO> products = new ArrayList<>();
 }

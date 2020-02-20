@@ -47,13 +47,23 @@ public interface ProductService {
     ProductDTO findByProductId(Integer productId) throws ValidationException;
 
     /**
+     * Retrieve a list of Product instances with ids that are in list of arg product ids
+     * @param productIds
+     * @return
+     * @throws IllegalArgumentException
+     * @throws ValidationException
+     */
+    List<ProductDTO> findByProductIdIn(List<Integer> productIds) throws IllegalArgumentException,
+            ValidationException;
+
+    /**
      * Retrieve a Product model instance using product name
      * @param productName
      * @return
      * @throws ValidationException
      * @throws IllegalArgumentException
      */
-    ProductDTO findByProductName(String productName) throws ValidationException, IllegalArgumentException;
+    List<ProductDTO> findByProductName(String productName) throws ValidationException, IllegalArgumentException;
 
     /**
      * Retrieve list of Product model instances using argument group name
@@ -63,6 +73,15 @@ public interface ProductService {
      * @throws IllegalArgumentException
      */
     List<ProductDTO> findProductsByGroup(String groupName) throws ValidationException, IllegalArgumentException;
+
+    /**
+     * Retrieve list of Product model instances using argument project id
+     * @param projectId
+     * @return
+     * @throws ValidationException
+     * @throws IllegalArgumentException
+     */
+    List<ProductDTO> findProductsByProjectId(Integer projectId) throws ValidationException, IllegalArgumentException;
 
     /**
      * Retrieve list of all Product model instances

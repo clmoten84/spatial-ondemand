@@ -9,13 +9,83 @@
 define(['dojo/dom',
         'dojo/dom-construct',
         'dojo/on',
-        'dijit/dijit'], function(dom, domConstruct, on, dijit) {
+        'dijit/dijit',
+        'dijit/Dialog',
+        'dijit/form/RadioButton',
+        'dijit/form/Button'], function(dom, domConstruct, on, dijit, Dialog, RadioButton, Button) {
+
+    /**
+     * Defines the header for the Projects tool. The header contains actions to take for filtering
+     * and creating new Projects.
+     */
+    function renderProjectsHeader() {
+        let projectsHeaderDiv = domConstruct.create("div", {style: 'border-bottom: 1px solid #411145; padding-bottom:5px;'});
+
+        // Project Filter
+        let projectFilterDiv = domConstruct.create("div", {style: 'margin-right:8px; display:inline-block;'});
+        let projectFilterForm = domConstruct.create("form", {id: 'projectFilterForm', style: 'font-size:small;'});
+
+        let iOwnFilterDiv = domConstruct.create("div", {style: 'margin-right:5px; display:inline-block;'});
+        iOwnFilterDiv.appendChild(domConstruct.create('label', {innerHTML: 'I own:', style: 'margin-right:2px; display:inline-block;', for: 'iOwnRadio'}));
+        iOwnFilterDiv.appendChild(new RadioButton({
+            id: 'iOwnRadio',
+            checked: true,
+            title: 'View projects I own'
+        }).domNode);
+
+        let sharedFilterDiv = domConstruct.create("div", {style: 'display:inline-block;'});
+        sharedFilterDiv.appendChild(domConstruct.create('label', {innerHTML: 'Shared w/ me:', style: 'margin-right:2px; display:inline-block;', for: 'sharedRadio'}));
+        sharedFilterDiv.appendChild(new RadioButton({
+            id: 'sharedRadio',
+            checked: false,
+            title: 'View projects shared with me'
+        }).domNode);
+
+        projectFilterForm.appendChild(iOwnFilterDiv);
+        projectFilterForm.appendChild(sharedFilterDiv);
+        projectFilterDiv.appendChild(projectFilterForm);
+
+        // Create Project
+        let projectCreateDiv = domConstruct.create("div", {style: 'display:inline-block;'});
+        projectCreateDiv.appendChild(new Button({
+            id: 'createNewProjectBtn',
+            label: 'Create Project',
+            showLabel: false,
+            iconClass: 'dijitIconNewTask',
+            onClick: function() {
+                console.log('Use REST to create new project...');
+            }
+        }).domNode);
+
+        projectsHeaderDiv.appendChild(projectFilterDiv);
+        projectsHeaderDiv.appendChild(projectCreateDiv);
+        return projectsHeaderDiv;
+    }
+
+    /**
+     * Defines and renders the components for the Projects tool
+     */
+    function renderProjectsToolComponents() {
+        let projectsToolDiv = domConstruct.create("div", {style: 'padding:4px;'});
+        projectsToolDiv.appendChild(renderProjectsHeader());
+
+        return projectsToolDiv;
+    }
+
+    // Projects Tool window
+    let projectsToolWindow = new Dialog({
+        id: 'projectsTool',
+        title: 'Projects',
+        class: 'appNonModalDialog'
+    });
+    projectsToolWindow.focus = function() {}; // This is a hack to prevent the dialog from requesting focus
+    projectsToolWindow.set('content', renderProjectsToolComponents());
 
     return {
         /**
          * Renders the dom node that is used for the projects trigger button. The projects
          * trigger button shows/hides the projects tool.
-         * @return domNode
+         * @return div domNode
          */
         renderProjectsBtn: function() {
             // Define the projects trigger container and the projects trigger button
@@ -36,7 +106,12 @@ define(['dojo/dom',
 
             // Register the click event handler for the projectsBtn
             on(projectsBtn, "click", function(e) {
-                console.log('This will trigger the projects tool...');
+                if (projectsToolWindow.open) {
+                    projectsToolWindow.hide();
+                }
+                else {
+                    projectsToolWindow.show();
+                }
             });
 
             projectsDiv.appendChild(projectsBtn);

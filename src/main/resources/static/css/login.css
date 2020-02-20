@@ -1,0 +1,113 @@
+/*
+ * login.css
+ *
+ * Styles definitions for login page
+ */
+
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: beige;
+}
+
+/* ID selectors */
+#login-root {
+    height: 100%;
+    width: 100%;
+}
+
+#login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-div {
+    color: #ffffff;
+    background-color: #411145;
+    width: 500px;
+    height: 500px;
+    border: 2px solid rgba(65,17,69,.2);
+    border-radius: 8px;
+    padding: 10px 25px 10px 25px;
+}
+
+#login-brand-logo {
+    text-align:center;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+
+#login-brand {
+    text-align:center;
+    border-bottom:2px solid rgba(255,255,255,.6);
+    margin-bottom: 35px;
+}
+
+#login-form-div {
+    padding: 10px 25px 10px 25px;
+}
+
+#login-form-input {
+    margin-top: 45px;
+    text-align: center;
+}
+
+#legal {
+    margin-top: 50px;
+    text-align: center;
+    font-size: small;
+}
+
+#login-toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #411145;
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    padding: 10px;
+    position: fixed;
+    z-index: 1;
+    left: 88%;
+    top: 10px;
+}
+
+#login-toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 10px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {top: 10px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+}
+
+@keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 10px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {top: 10px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+}
+
+/* Class selectors */
+.login-form-field {
+    margin-bottom: 20px;
+}

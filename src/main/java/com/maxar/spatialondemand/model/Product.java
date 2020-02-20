@@ -6,6 +6,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Product
@@ -31,9 +33,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", nullable = false)
     @JsonBackReference
+    @ToString.Exclude
     private ProductGroup productGroup;
 
     @Column(name = "product_name", nullable = false, unique = true)
@@ -41,6 +44,10 @@ public class Product {
 
     @Column(name = "service_url", nullable = false)
     private String serviceUrl;
+
+    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<Project> projects = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

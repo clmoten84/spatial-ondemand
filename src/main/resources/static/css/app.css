@@ -1,5 +1,7 @@
 /*
- * Layout CSS
+ * App CSS
+ *
+ * Contains application style definitions
  */
 
 html, body {
@@ -29,7 +31,6 @@ body {
 
 #rightHeaderSection {
     width: 16em;
-    /*text-align: center;*/
 }
 
 #search {
@@ -121,7 +122,46 @@ body {
     font-size: small !important;
 }
 
-/* Class selectors */
+#projectsTool {
+    /*position: absolute;
+    top: 160px !important;
+    left: 420px !important;*/
+    width: 500px;
+    height: 300px;
+    font-size: small !important;
+}
+
+#projectsTool .dijitDialogPaneContent {
+    height: 300px;
+    overflow-y: scroll !important;
+}
+
+#logout-link {
+    background-color: unset;
+    border: none;
+    color: white;
+    float: right;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: right;
+}
+
+.user-profile-btn {
+    float: right;
+}
+
+.user-profile-btn .dijitButtonNode {
+    border-radius: 100px !important;
+    background-color: white !important;
+    border: unset !important;
+}
+
+.user-profile-btn .dijitArrowButtonInner {
+    display: none !important;
+}
+
+/************************ General Class selectors ********************/
 .brandTitle {
     cursor: default;
     color: white;
@@ -155,7 +195,6 @@ body {
 
 .appMenuItem {
     font-size: small;
-    font-style: italic;
 }
 
 .drawDialog {
@@ -230,7 +269,7 @@ body {
     margin: 5px;
 }
 
-/* Custom icon declarations */
+/********************** Custom icon declarations *****************/
 .shopping-cart-img {
     background-image: url("../img/cart_shopping_16.png");
     background-repeat: no-repeat;
@@ -251,7 +290,7 @@ body {
     background-image: url('../img/searchlt_48.png');
 }
 
-/* Dijit/Dojox overrides */
+/************************* Dijit/Dojox overrides **********************/
 .claro .dojoxExpandoTitle {
     font-weight: bold;
     border: none;
@@ -284,7 +323,68 @@ body {
     overflow: scroll;
 }
 
-/* Selectors for styling application buttons */
+/****************** Styles for custom calendar/date-picker widget **************/
+.dijitCalendarContainer table {
+    margin-left: 15px !important;
+}
+
+.dojoxCalendar .dojoxCalendarContainer {
+    background-color: beige !important;
+    border-bottom: 1px solid #411145 !important;
+    border-left: 1px solid #411145 !important;
+    border-right: 1px solid #411145 !important;
+}
+
+.dojoxCalendarContainer, .dojoxCalendarBody {
+    width: 100% !important;
+}
+
+.dojoxCalendarBody {
+    height: 177px !important;
+}
+
+.dojoxCalendarHeader {
+    margin-left: 34px; !important;
+}
+
+.dojoxCalendarBody table {
+    margin-left: 9px !important;
+    margin-top: 3px !important;
+}
+
+.dojoxCal-MY-labels {
+    margin-top: 8px !important;
+    margin-left: 32px !important;
+    border: 1px solid #411145 !important;
+}
+
+.dojoxCal-MY-btns .dijitButtonNode {
+    border: none !important;
+}
+
+.dojoxCal-MY-btns button {
+    padding: 2px !important;
+    border: 1px solid #411145 !important;
+}
+
+.dojoxCalendar .dojoxCal-MY-btns .dijitDisabled button {
+    background-color: #efefef !important;
+    border: 1px solid #efefef !important;
+    color: #808080 !important;
+    cursor: default !important;
+}
+
+.dojoxCal-MY-btns .ok-btn button {
+    background-color: #411145 !important;
+    color: white !important;
+}
+
+.dojoxCal-MY-btns .cancel-btn button {
+    background-color: white !important;
+    color: #333333 !important;
+}
+
+/************** Selectors for styling application buttons **********/
 .secondaryAppBtn .dijitButtonNode {
     background-color: white !important;
     background-image: none !important;
@@ -313,7 +413,7 @@ body {
     cursor: default !important;
 }
 
-/* Selectors for styling application modal dialogs */
+/**************** Selectors for styling application modal dialogs **********/
 .appModalDialog .dijitDialogTitle {
     color: white !important;
 }
@@ -326,7 +426,7 @@ body {
     cursor: move !important;
 }
 
-/* Selectors for styling application non-modal dialogs */
+/***************** Selectors for styling application non-modal dialogs ***********/
 .appNonModalDialog .dijitDialogTitle {
     color: white !important;
 }

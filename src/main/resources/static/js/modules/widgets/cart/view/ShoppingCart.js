@@ -22,8 +22,7 @@ define(['dojo/dom',
                 iconClass: 'shopping-cart-img',
                 title: ShoppingCartViewController.getShoppingCartCount() + ' items in cart',
                 onClick: function() {
-                    //ShoppingCartViewController.incrementShoppingCartCount();
-                    ShoppingCartViewController.testingSHPLib();
+                    ShoppingCartViewController.incrementShoppingCartCount();
                 }
             })
         }

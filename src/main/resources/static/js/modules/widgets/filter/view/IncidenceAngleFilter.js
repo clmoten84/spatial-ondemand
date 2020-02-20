@@ -6,7 +6,9 @@
 
 define(['dojo/dom-construct',
         'dijit/TitlePane',
-        'dijit/form/NumberSpinner'], function(domConstruct, TitlePane, NumberSpinner) {
+        'dijit/form/NumberSpinner',
+        'app/widgets/filter/viewController/CriteriaFilterViewController'],
+            function(domConstruct, TitlePane, NumberSpinner, CriteriaFilterViewController) {
 
     return {
         /**
@@ -31,16 +33,7 @@ define(['dojo/dom-construct',
                 constraints: { min: 0, max: 89, places: 0 },
                 required: false,
                 trim: true,
-                onChange: function (newValue) {
-                    // Validate value change
-                    // if (newValue < 0 || newValue > 89) {
-                    //     incidenceAngleFrom.set('value', 0);
-                    // }
-                    //
-                    // if (newValue >= incidenceAngleTo.get('value')) {
-                    //     incidenceAngleFrom.set('value', 0);
-                    // }
-                }
+                onChange: CriteriaFilterViewController.validateIncidenceAngleFromVal
             }).domNode);
 
             incidenceAngleFilterDiv.appendChild(domConstruct.create('span', {innerHTML: '-'}));
@@ -54,16 +47,7 @@ define(['dojo/dom-construct',
                 constraints: { min: 1, max: 90, places: 0 },
                 required: false,
                 trim: true,
-                onChange: function (newValue) {
-                    // Validate value change
-                    // if (newValue < 1 || newValue > 90) {
-                    //     incidenceAngleTo.set('value', 90);
-                    // }
-                    //
-                    // if (newValue <= incidenceAngleFrom.get('value')) {
-                    //     incidenceAngleTo.set('value', 90);
-                    // }
-                }
+                onChange: CriteriaFilterViewController.validateIncidenceAngleToVal
             }).domNode);
 
             incidenceAngleFilter.set('content', incidenceAngleFilterDiv);

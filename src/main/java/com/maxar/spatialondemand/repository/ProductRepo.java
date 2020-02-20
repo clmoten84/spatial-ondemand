@@ -1,7 +1,9 @@
 package com.maxar.spatialondemand.repository;
 
 import com.maxar.spatialondemand.model.Product;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
      * @param productName
      * @return
      */
-    Optional<Product> findProductByProductNameIgnoreCase(String productName);
+    List<Product> findProductByProductNameIgnoreCase(String productName);
 
     /**
      * Retrieves a list of Product instances with the argument ProductGroup name
@@ -28,4 +30,19 @@ public interface ProductRepo extends CrudRepository<Product, Integer> {
      * @return
      */
     List<Product> findProductsByProductGroup_GroupNameIgnoreCase(String groupName);
+
+    /**
+     * Retrieves a list of Product instances with ids in the argument list of ids
+     * @param productIds
+     * @return
+     */
+    List<Product> findProductsByProductIdIn(List<Integer> productIds);
+
+    /**
+     * Retrieves a list of Product instances associated with Project instance with arg project id
+     * @param projectId
+     * @return
+     */
+    @Query("select prj.products from Project prj where prj.id = :projectId")
+    List<Product> findProductsByProjectId(@Param("projectId") Integer projectId);
 }

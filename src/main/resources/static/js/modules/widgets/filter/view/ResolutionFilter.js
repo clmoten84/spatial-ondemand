@@ -6,7 +6,9 @@
 
 define(['dojo/dom-construct',
         'dijit/TitlePane',
-        'dijit/form/NumberSpinner'], function(domConstruct, TitlePane, NumberSpinner) {
+        'dijit/form/NumberSpinner',
+        'app/widgets/filter/viewController/CriteriaFilterViewController'],
+            function(domConstruct, TitlePane, NumberSpinner, CriteriaFilterViewController) {
 
     return {
         /**
@@ -31,16 +33,7 @@ define(['dojo/dom-construct',
                 constraints: { min: 0, max: 5999, places: 0 },
                 required: true,
                 trim: true,
-                onChange: function(newValue) {
-                    // Validate value change
-                    // if (newValue < 0 || newValue > 5999) {
-                    //     resolutionFrom.set('value', 0);
-                    // }
-                    //
-                    // if (newValue >= resolutionTo.get('value')) {
-                    //     resolutionFrom.set('value', 0);
-                    // }
-                }
+                onChange: CriteriaFilterViewController.validateResolutionFromVal
             }).domNode);
 
             resolutionFilterDiv.appendChild(domConstruct.create('span', {innerHTML: '-'}));
@@ -54,16 +47,7 @@ define(['dojo/dom-construct',
                 constraints: { min: 1, max: 6000, places: 0 },
                 required: true,
                 trim: true,
-                onChange: function(newValue) {
-                    // Validate value change
-                    // if (newValue < 1 || newValue > 6000) {
-                    //     resolutionTo.set('value', 6000);
-                    // }
-                    //
-                    // if (newValue <= resolutionFrom.get('value')) {
-                    //     resolutionTo.set('value', 6000);
-                    // }
-                }
+                onChange: CriteriaFilterViewController.validateResolutionToVal
             }).domNode);
 
             resolutionFilter.set('content', resolutionFilterDiv);

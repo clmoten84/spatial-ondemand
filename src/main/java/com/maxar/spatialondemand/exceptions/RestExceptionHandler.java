@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -214,11 +215,91 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
      * @param req
      * @return
      */
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest req) {
+    @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFoundException(javax.persistence.EntityNotFoundException ex, WebRequest req) {
         LOG.error(ex.getLocalizedMessage(), ex);
         String message = "Expected entity could not be found in data store";
-        return buildResponseEntity(new APIError(HttpStatus.BAD_REQUEST, message, ex));
+        return buildResponseEntity(new APIError(HttpStatus.NOT_FOUND, message, ex));
+    }
+
+    /**
+     * Handles exception thrown when an entity expected to be in data store cannot be found in data store
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    protected ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        String message = "Expected entity could not be found in data store";
+        return buildResponseEntity(new APIError(HttpStatus.NOT_FOUND, message, ex));
+    }
+
+    /**
+     * Handles exception thrown when an incorrect password is provided while handling password protected request
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(PasswordMatchException.class)
+    protected ResponseEntity<Object> handlePasswordMatchException(PasswordMatchException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        String message = "Invalid credentials provided";
+        return buildResponseEntity(new APIError(HttpStatus.UNAUTHORIZED, message, ex));
+    }
+
+    /**
+     * Handles exception thrown when an attempt is made to create a user with an invalid password
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(PasswordValidationException.class)
+    protected ResponseEntity<Object> handlePasswordValidationException(PasswordValidationException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        String message = "Provided password does not meet minimum requirements. " +
+                "Password must be at least 8 characters contain at least one number and at least one of" +
+                " the following allowable special characters, (!, @, #, $, %, ^, or &)";
+        return buildResponseEntity(new APIError(HttpStatus.INTERNAL_SERVER_ERROR, message, ex));
+    }
+
+    /**
+     * Handles exception thrown when an attempt is made to create a user with a username that already exists
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    protected ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        String message = String.format("User %s already exists", ex.getErrUsername());
+        return buildResponseEntity(new APIError(HttpStatus.INTERNAL_SERVER_ERROR, message, ex));
+    }
+
+    /**
+     * Handles exception thrown when a requested user is not found in datastore
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        String message = String.format("User %s could not be found", ex.getErrUsername());
+        return buildResponseEntity(new APIError(HttpStatus.INTERNAL_SERVER_ERROR, message, ex));
+    }
+
+    /**
+     * Handles exception thrown when user provides an invalid email value
+     * @param ex
+     * @param req
+     * @return
+     */
+    @ExceptionHandler(EmailValidationException.class)
+    protected ResponseEntity<Object> handleEmailValidationException(EmailValidationException ex, WebRequest req) {
+        LOG.error(ex.getLocalizedMessage(), ex);
+        String message = String.format("Provided email - %s - is not valid", ex.getInvalidEmail());
+        return buildResponseEntity(new APIError(HttpStatus.INTERNAL_SERVER_ERROR, message, ex));
     }
 
     /**

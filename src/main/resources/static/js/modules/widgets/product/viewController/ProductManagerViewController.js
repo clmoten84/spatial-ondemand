@@ -6,19 +6,16 @@
  * multiple instantiations.
  */
 
-define(['dojo/on',
-        'dojo/dom',
-        'dojo/dom-construct',
-        'dojo/request',
-        'dijit/dijit',
-        'dijit/TitlePane',
-        'dijit/form/CheckBox',
-        'app/widgets/product/view/ProductManager'], function(on, dom, domConstruct, request,
-                                                             dijit, TitlePane, CheckBox, ProductManager) {
+define(['dojo/request',
+        'dojo/query',
+        'app/widgets/product/view/ProductManager'], function(request, query, ProductManager) {
 
     return {
         renderProducts: function() {
             // Make request to fetch product related data from server for display
+            let token = query("meta[name='_csrf']")[0].content;
+            let header = query("meta[name='_csrf_header']")[0].content;
+
             request.get('api/productGroups', {
                 handleAs: 'json',
                 timeout: 60000,

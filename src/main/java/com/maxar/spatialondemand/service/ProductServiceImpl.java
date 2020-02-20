@@ -10,9 +10,11 @@ import org.modelmapper.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -40,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
         this.productGroupRepo = productGroupRepo;
     }
 
+    @Transactional
     @Override
     public ProductDTO save(ProductDTO productDTO) throws ValidationException, IllegalArgumentException,
             EntityNotFoundException {
@@ -52,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
         return this.entityToDto(productRepo.save(this.dtoToEntity(productDTO)));
     }
 
+    @Transactional
     @Override
     public ProductDTO update(ProductDTO productDTO) throws ValidationException, IllegalArgumentException,
             EntityNotFoundException {
@@ -81,11 +85,13 @@ public class ProductServiceImpl implements ProductService {
         return this.entityToDto(productRepo.save(entityToUpdate));
     }
 
+    @Transactional
     @Override
     public void deleteById(Integer productId) {
         productRepo.deleteById(productId);
     }
 
+    @Transactional
     @Override
     public ProductDTO findByProductId(Integer productId) throws ValidationException {
         Product entity = productRepo.findById(productId).orElse(null);
@@ -96,20 +102,38 @@ public class ProductServiceImpl implements ProductService {
             return null;
     }
 
+    @Transactional
     @Override
-    public ProductDTO findByProductName(String productName) throws ValidationException, IllegalArgumentException {
-        if (productName == null || productName.isEmpty()) {
-            throw new IllegalArgumentException("Product name argument cannot be null or empty.");
+    public List<ProductDTO> findByProductIdIn(List<Integer> productIds) throws IllegalArgumentException,
+            ValidationException {
+        if (productIds == null || productIds.isEmpty()) {
+            throw new IllegalArgumentException("Product ids list arg cannot be null or empty.");
         }
 
-        Product entity = productRepo.findProductByProductNameIgnoreCase(productName).orElse(null);
-        if (entity != null) {
-            return this.entityToDto(entity);
+        List<Product> entities = productRepo.findProductsByProductIdIn(productIds);
+        if (entities != null) {
+            return entities.stream().map(this::entityToDto).collect(Collectors.toList());
         }
         else
             return null;
     }
 
+    @Transactional
+    @Override
+    public List<ProductDTO> findByProductName(String productName) throws ValidationException, IllegalArgumentException {
+        if (productName == null || productName.isEmpty()) {
+            throw new IllegalArgumentException("Product name argument cannot be null or empty.");
+        }
+
+        List<Product> entities = productRepo.findProductByProductNameIgnoreCase(productName);
+        if (entities != null) {
+            return entities.stream().map(this::entityToDto).collect(Collectors.toList());
+        }
+        else
+            return null;
+    }
+
+    @Transactional
     @Override
     public List<ProductDTO> findProductsByGroup(String groupName) throws ValidationException, IllegalArgumentException {
         if (groupName == null || groupName.isEmpty()) {
@@ -120,6 +144,18 @@ public class ProductServiceImpl implements ProductService {
         return entities.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
+    public List<ProductDTO> findProductsByProjectId(Integer projectId) throws ValidationException, IllegalArgumentException {
+        if (projectId == null) {
+            throw new IllegalArgumentException("Project id argument cannot be null.");
+        }
+
+        List<Product> entities = productRepo.findProductsByProjectId(projectId);
+        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
+
+    @Transactional
     @Override
     public List<ProductDTO> getAllProducts() throws ValidationException {
         List<Product> products = StreamSupport.stream(productRepo.findAll().spliterator(), false)

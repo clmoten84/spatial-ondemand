@@ -20,7 +20,7 @@ define(['dojo/dom',
         renderSearchResultsBtn: function() {
             // Define search results trigger container and the search results trigger button
             let searchResultsDiv = domConstruct.create("div", {id: 'searchResultsDiv'});
-            searchResultsDiv.setAttribute('title', 'View Search Results');
+            searchResultsDiv.setAttribute('title', 'Fetch Search Results');
 
             // We are using an SVG for the projects button. Creating an in-line SVG element with dom-construct
             // does not work, and we cannot work with <object> elements because onclick events are not allowed

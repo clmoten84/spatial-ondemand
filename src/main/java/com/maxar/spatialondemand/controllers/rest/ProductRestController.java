@@ -144,7 +144,7 @@ public class ProductRestController {
             params = "name",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ProductDTO fetchProductByName(@RequestParam("name") String productName) {
+    public List<ProductDTO> fetchProductsByName(@RequestParam("name") String productName) {
         return productService.findByProductName(productName);
     }
 
@@ -159,6 +159,19 @@ public class ProductRestController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<ProductDTO> fetchProductsByGroup(@RequestParam("groupName") String productGroupName) {
         return productService.findProductsByGroup(productGroupName);
+    }
+
+    /**
+     * Fetch a list of Product instances using argument project id
+     * @param projectId
+     * @return
+     */
+    @GetMapping(value = "/products",
+            params = "projectId",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<ProductDTO> fetchProductsByProject(@RequestParam("projectId") Integer projectId) {
+        return productService.findProductsByProjectId(projectId);
     }
 
     /**

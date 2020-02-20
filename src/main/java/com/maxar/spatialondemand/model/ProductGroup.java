@@ -41,9 +41,10 @@ public class ProductGroup {
             mappedBy = "productGroup",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @Setter(AccessLevel.PRIVATE)
+    @ToString.Exclude
     @JsonManagedReference
     private List<Product> products = new ArrayList<>();
 

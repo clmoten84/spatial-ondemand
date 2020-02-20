@@ -7,6 +7,7 @@
  */
 
 define(['dojo/dom',
+        'dojo/query',
         'dojo/dom-construct',
         'dijit/layout/BorderContainer',
         'dijit/layout/ContentPane',
@@ -15,9 +16,11 @@ define(['dojo/dom',
         'app/widgets/filter/view/FilterMenu',
         'app/widgets/aoi/view/AOIMenu',
         'app/widgets/cart/view/ShoppingCart',
-        'app/widgets/product/view/ProductManager'], function(dom, domConstruct, BorderContainer,
-                                                         ContentPane, ExpandoPane, MapView, FilterMenu,
-                                                         AOIMenu, ShoppingCart, ProductManager) {
+        'app/widgets/product/view/ProductManager',
+        'app/widgets/userProfile/view/UserProfile'],
+                function(dom, query, domConstruct, BorderContainer,
+                         ContentPane, ExpandoPane, MapView, FilterMenu,
+                         AOIMenu, ShoppingCart, ProductManager, UserProfile) {
 
         // Creates the page layout root component which serves as the parent component
         // for all other layout components.
@@ -52,17 +55,17 @@ define(['dojo/dom',
             });
             headerContainer.addChild(centerHeaderSection);
 
-            // App actions
+            // Actions header
             let rightHeaderSection = new ContentPane({
                 id: 'rightHeaderSection',
                 region: 'right'
             });
 
-            let logoutLink = domConstruct.create('a', {innerHTML: 'Sign Out', href: '#',  style: 'color:white; ' +
-                'float:right; font-size:13px; margin-right:0.2em;'});
-            rightHeaderSection.domNode.appendChild(logoutLink);
+            // Add the user profile trigger and menu
+            rightHeaderSection.domNode.appendChild(UserProfile.renderUserProfileMenu().domNode);
 
-            let actionsDiv = domConstruct.create('div', {style: 'clear:both; float:right; margin-top:5%;'});
+            // Add the app actions triggers and menus
+            let actionsDiv = domConstruct.create('div', {style: 'clear:both; float:right; margin-top:1%;'});
             actionsDiv.appendChild(FilterMenu.renderFiltersMenu().domNode);
             actionsDiv.appendChild(AOIMenu.renderAOIMenu().domNode);
             actionsDiv.appendChild(ShoppingCart.renderShoppingCartBtn().domNode);

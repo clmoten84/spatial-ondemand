@@ -60,6 +60,10 @@
             <appender-ref ref="CONSOLE_APPENDER"/>
         </logger>
 
+        <logger name="org.testcontainers" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+
         <!-- Root level logger -->
         <root level="ERROR">
             <appender-ref ref="CONSOLE_APPENDER"/>

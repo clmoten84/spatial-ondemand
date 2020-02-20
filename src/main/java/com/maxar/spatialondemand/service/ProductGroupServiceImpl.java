@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -42,6 +43,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
      * @throws ValidationException
      * @throws IllegalArgumentException
      */
+    @Transactional
     @Override
     public ProductGroupDTO save(ProductGroupDTO productGroupDTO) throws ValidationException, IllegalArgumentException {
         // Validate args
@@ -61,6 +63,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
      * @throws IllegalArgumentException
      * @throws EntityNotFoundException
      */
+    @Transactional
     @Override
     public ProductGroupDTO update(ProductGroupDTO productGroupDTO) throws ValidationException, IllegalArgumentException,
             EntityNotFoundException {
@@ -82,6 +85,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         return this.entityToDto(productGroupRepo.save(entityToUpdate));
     }
 
+    @Transactional
     @Override
     public void delete(Integer groupId) {
         productGroupRepo.deleteById(groupId);
@@ -93,6 +97,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
      * @return
      * @throws ValidationException
      */
+    @Transactional
     @Override
     public ProductGroupDTO findByGroupId(Integer groupId) throws ValidationException {
         ProductGroup entity = productGroupRepo.findById(groupId).orElse(null);
@@ -110,6 +115,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
      * @throws ValidationException
      * @throws IllegalArgumentException
      */
+    @Transactional
     @Override
     public ProductGroupDTO findByGroupName(String groupName) throws ValidationException, IllegalArgumentException {
         if (groupName == null || groupName.isEmpty()) {
@@ -129,6 +135,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
      * @return
      * @throws ValidationException
      */
+    @Transactional
     @Override
     public List<ProductGroupDTO> getAllGroups() throws ValidationException {
         List<ProductGroup> fetchedEntities = StreamSupport
@@ -147,7 +154,8 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     private ProductGroupDTO entityToDto(ProductGroup entity) throws ValidationException {
         // Validate mapping
         if (modelMapper.getTypeMap(ProductGroup.class, ProductGroupDTO.class) == null) {
-            modelMapper.createTypeMap(ProductGroup.class, ProductGroupDTO.class);
+            modelMapper.createTypeMap(ProductGroup.class,
+                    ProductGroupDTO.class);
             modelMapper.validate();
         }
 

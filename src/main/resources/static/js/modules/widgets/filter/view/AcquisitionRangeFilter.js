@@ -7,7 +7,9 @@
 define(['dojo/dom-construct',
         'dijit/TitlePane',
         'dijit/form/DateTextBox',
-        'app/widgets/filter/viewController/CriteriaFilterViewController'], function(domConstruct, TitlePane, DateTextBox, CriteriaFilterViewController) {
+        'app/widgets/filter/viewController/CriteriaFilterViewController'],
+            function(domConstruct, TitlePane, DateTextBox, CriteriaFilterViewController,
+) {
 
     return {
         /**
@@ -16,7 +18,6 @@ define(['dojo/dom-construct',
          * @returns TitlePane domNode
          */
         renderAcquisitionRangeFilter: function() {
-            //TODO: set validation for date inputs in AcquisitionRangeFilterViewController
             let acquisitionRangeFilter = new TitlePane({
                 id: 'acquisitionRangeFilter',
                 class: 'criteriaFilterSearchWidgets',
@@ -25,16 +26,16 @@ define(['dojo/dom-construct',
 
             let acquisitionRangeFilterDiv = domConstruct.create('div');
             acquisitionRangeFilterDiv.appendChild(new DateTextBox({
-                id: 'acquistionRangeBegin',
+                id: 'acquisitionRangeBegin',
                 class: 'acquisitionRangeDateBox',
                 title: 'Acquisition Range (Begin)',
                 placeHolder: 'Acquisition Range (Begin)',
                 required: true,
-                value: new Date(1970, 0, 1),
+                value: new Date(1980, 0, 1),
                 rangeMessage: 'Selected date is out of valid range!',
                 missingMessage: 'Begin date is required!',
                 constraints: {
-                    min: new Date(1970, 0, 1),
+                    min: new Date(1980, 0, 1),
                     max: new Date()
                 },
                 onChange: CriteriaFilterViewController.validateAcquisitionRangeBeginDate
@@ -52,7 +53,7 @@ define(['dojo/dom-construct',
                 rangeMessage: 'Selected date is out of valid range!',
                 missingMessage: 'End date is required!',
                 constraints: {
-                    min: new Date(1970, 0, 1),
+                    min: new Date(1980, 0, 1),
                     max: new Date()
                 },
                 onChange: CriteriaFilterViewController.validateAcquisitionRangeEndDate

@@ -15,10 +15,12 @@ define(['dojo/_base/declare',
         'app/widgets/filter/view/ResolutionFilter',
         'app/widgets/filter/view/IncidenceAngleFilter',
         'app/widgets/filter/view/CloudCoverFilter',
-        'app/widgets/filter/view/SnowCoverFilter'], function(declare, dijit, dom, domConstruct, Dialog,
-                                                         Button, AcquisitionRangeFilter, ResolutionFilter,
-                                                         IncidenceAngleFilter, CloudCoverFilter,
-                                                         SnowCoverFilter) {
+        'app/widgets/filter/view/SnowCoverFilter',
+        'app/widgets/filter/viewController/CriteriaFilterViewController'],
+            function(declare, dijit, dom, domConstruct, Dialog,
+                     Button, AcquisitionRangeFilter, ResolutionFilter,
+                     IncidenceAngleFilter, CloudCoverFilter, SnowCoverFilter,
+                     CriteriaFilterViewController) {
 
     /**
      * Defines the criteria filter components and adds them to the container div.
@@ -37,18 +39,14 @@ define(['dojo/_base/declare',
             id: 'criteriaFilterReset',
             label: 'Reset',
             class: 'secondaryAppBtn',
-            onClick: function() {
-                //TODO: implement filter form reset
-            }
+            onClick: CriteriaFilterViewController.resetCriterFilter
         }).domNode);
 
         filterFormInputDiv.appendChild(new Button({
             id: 'criteriaFilterSubmit',
             label: 'OK',
             class: 'primaryAppBtn',
-            onClick: function() {
-                //TODO: implement filter form sumbit
-            }
+            onClick: CriteriaFilterViewController.submitCriteriaFilter
         }).domNode);
         criteriaFilterDiv.appendChild(filterFormInputDiv);
 
